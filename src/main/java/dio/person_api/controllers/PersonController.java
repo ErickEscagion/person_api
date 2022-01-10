@@ -1,5 +1,7 @@
 package dio.person_api.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +43,8 @@ public class PersonController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "success doing GET Person"),
     })
-    public String listAll() {
-        return "teste API";
+    public List<PersonDTO> listAll() {
+        return personService.listAll();
     }
 
 }

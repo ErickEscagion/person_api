@@ -1,5 +1,8 @@
 package dio.person_api.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,13 @@ public class PersonService {
         return MessageResponseDTO.builder()
                 .message(s + id2)
                 .build();
+    }
+
+    public List<PersonDTO> listAll() {
+        List<Person> people = personRepository.findAll();
+        return people.stream()
+                .map(personMapper::toDTO)
+                .collect(Collectors.toList());
     }
     
 }
