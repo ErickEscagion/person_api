@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,17 @@ public class PersonController {
     })
     public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return personService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete Person by ID", description = "Route to delete person by ID", tags = "Person")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "success delete Person"),
+        @ApiResponse(responseCode = "404", description = "Person Not Found"),
+    })
+    public void delete(@PathVariable Long id) throws PersonNotFoundException {
+        personService.delete(id);
     }
 
 }

@@ -17,17 +17,17 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
-    
 
     private final PersonRepository personRepository;
 
     private final PersonMapper personMapper;
-    
+
     public MessageResponseDTO create(PersonDTO personDTO) {
         Person person = personMapper.toModel(personDTO);
         Person savedPerson = personRepository.save(person);
 
-        MessageResponseDTO messageResponse = createMessageResponse("Person successfully created with ID ", savedPerson.getId());
+        MessageResponseDTO messageResponse = createMessageResponse("Person successfully created with ID ",
+                savedPerson.getId());
 
         return messageResponse;
     }
@@ -51,5 +51,9 @@ public class PersonService {
         return personMapper.toDTO(person);
     }
 
-    
+    public void delete(Long id) throws PersonNotFoundException {
+        personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+        personRepository.deleteById(id);
+    }
+
 }
