@@ -10,6 +10,7 @@ import dio.person_api.dto.mapper.PersonMapper;
 import dio.person_api.dto.request.PersonDTO;
 import dio.person_api.dto.response.MessageResponseDTO;
 import dio.person_api.entities.Person;
+import dio.person_api.exception.PersonNotFoundException;
 import dio.person_api.repositories.PersonRepository;
 import lombok.AllArgsConstructor;
 
@@ -43,5 +44,12 @@ public class PersonService {
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public PersonDTO findById(Long id) throws PersonNotFoundException {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+        return personMapper.toDTO(person);
+    }
+
     
 }
