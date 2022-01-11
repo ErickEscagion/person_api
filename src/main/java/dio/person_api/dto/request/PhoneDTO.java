@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import dio.person_api.enums.PhoneType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
 @Builder
@@ -18,11 +19,14 @@ import dio.person_api.enums.PhoneType;
 @AllArgsConstructor
 public class PhoneDTO {
 
+    @Schema(description = "ID auto generate")
     private Long id;
 
+    @Schema(description = "type based on an Enum (HOME, MOBILE, COMMERCIAL)", example = "MOBILE")
     @Enumerated(EnumType.STRING)
     private PhoneType type;
 
+    @Schema(description = "Phone Number", example = "(15)99818-1242")
     @NotEmpty
     @Size(min = 13, max = 14)
     private String number;
